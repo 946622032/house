@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.kgc.mapper.HouseMapper" >
+  <resultMap id="BaseResultMap" type="cn.kgc.domain.House" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="USER_ID" property="userId" jdbcType="INTEGER" />
+    <result column="TYPE_ID" property="typeId" jdbcType="INTEGER" />
+    <result column="TITLE" property="title" jdbcType="VARCHAR" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+    <result column="PRICE" property="price" jdbcType="DECIMAL" />
+    <result column="PUBDATE" property="pubdate" jdbcType="DATE" />
+    <result column="FLOORAGE" property="floorage" jdbcType="INTEGER" />
+    <result column="CONTACT" property="contact" jdbcType="VARCHAR" />
+    <result column="STREET_ID" property="streetId" jdbcType="INTEGER" />
+    <result column="ispass" property="ispass" jdbcType="INTEGER" />
+    <result column="isdel" property="isdel" jdbcType="INTEGER" />
+    <result column="path" property="path" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, USER_ID, TYPE_ID, TITLE, DESCRIPTION, PRICE, PUBDATE, FLOORAGE, CONTACT, STREET_ID, 
+    ispass, isdel, path
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.kgc.domain.HouseExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from house
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from house
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from house
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.kgc.domain.House" >
+    insert into house (ID, USER_ID, TYPE_ID, 
+      TITLE, DESCRIPTION, PRICE, 
+      PUBDATE, FLOORAGE, CONTACT, 
+      STREET_ID, ispass, isdel, 
+      path)
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, #{typeId,jdbcType=INTEGER}, 
+      #{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, 
+      #{pubdate,jdbcType=DATE}, #{floorage,jdbcType=INTEGER}, #{contact,jdbcType=VARCHAR}, 
+      #{streetId,jdbcType=INTEGER}, #{ispass,jdbcType=INTEGER}, #{isdel,jdbcType=INTEGER}, 
+      #{path,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.kgc.domain.House" >
+    insert into house
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="typeId != null" >
+        TYPE_ID,
+      </if>
+      <if test="title != null" >
+        TITLE,
+      </if>
+      <if test="description != null" >
+        DESCRIPTION,
+      </if>
+      <if test="price != null" >
+        PRICE,
+      </if>
+      <if test="pubdate != null" >
+        PUBDATE,
+      </if>
+      <if test="floorage != null" >
+        FLOORAGE,
+      </if>
+      <if test="contact != null" >
+        CONTACT,
+      </if>
+      <if test="streetId != null" >
+        STREET_ID,
+      </if>
+      <if test="ispass != null" >
+        ispass,
+      </if>
+      <if test="isdel != null" >
+        isdel,
+      </if>
+      <if test="path != null" >
+        path,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="typeId != null" >
+        #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="pubdate != null" >
+        #{pubdate,jdbcType=DATE},
+      </if>
+      <if test="floorage != null" >
+        #{floorage,jdbcType=INTEGER},
+      </if>
+      <if test="contact != null" >
+        #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="streetId != null" >
+        #{streetId,jdbcType=INTEGER},
+      </if>
+      <if test="ispass != null" >
+        #{ispass,jdbcType=INTEGER},
+      </if>
+      <if test="isdel != null" >
+        #{isdel,jdbcType=INTEGER},
+      </if>
+      <if test="path != null" >
+        #{path,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.kgc.domain.House" >
+    update house
+    <set >
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="typeId != null" >
+        TYPE_ID = #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        PRICE = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="pubdate != null" >
+        PUBDATE = #{pubdate,jdbcType=DATE},
+      </if>
+      <if test="floorage != null" >
+        FLOORAGE = #{floorage,jdbcType=INTEGER},
+      </if>
+      <if test="contact != null" >
+        CONTACT = #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="streetId != null" >
+        STREET_ID = #{streetId,jdbcType=INTEGER},
+      </if>
+      <if test="ispass != null" >
+        ispass = #{ispass,jdbcType=INTEGER},
+      </if>
+      <if test="isdel != null" >
+        isdel = #{isdel,jdbcType=INTEGER},
+      </if>
+      <if test="path != null" >
+        path = #{path,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.kgc.domain.House" >
+    update house
+    set USER_ID = #{userId,jdbcType=INTEGER},
+      TYPE_ID = #{typeId,jdbcType=INTEGER},
+      TITLE = #{title,jdbcType=VARCHAR},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      PRICE = #{price,jdbcType=DECIMAL},
+      PUBDATE = #{pubdate,jdbcType=DATE},
+      FLOORAGE = #{floorage,jdbcType=INTEGER},
+      CONTACT = #{contact,jdbcType=VARCHAR},
+      STREET_ID = #{streetId,jdbcType=INTEGER},
+      ispass = #{ispass,jdbcType=INTEGER},
+      isdel = #{isdel,jdbcType=INTEGER},
+      path = #{path,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="getHouseData" parameterType="Integer" resultType="House">
+    SELECT ispass,house.id,type_id,title,pubdate,floorage,contact,street_id,path,
+        street.name sname,type.NAME tname,district.NAME dname
+    FROM house
+    LEFT JOIN TYPE ON house.TYPE_ID=type.ID
+    LEFT JOIN street ON house.STREET_ID=street.ID
+    LEFT JOIN district ON street.DISTRICT_ID=district.ID
+    WHERE isdel=0 and USER_ID=#{uid}
+  </select>
+
+  <select id="getDelHouseData" parameterType="Integer" resultType="House">
+    SELECT ispass,house.id,type_id,title,pubdate,floorage,contact,street_id,path,
+        street.name sname,type.NAME tname,district.NAME dname
+    FROM house
+    LEFT JOIN TYPE ON house.TYPE_ID=type.ID
+    LEFT JOIN street ON house.STREET_ID=street.ID
+    LEFT JOIN district ON street.DISTRICT_ID=district.ID
+    WHERE isdel=1 and USER_ID=#{uid}
+  </select>
+
+  <select id="selectHouseById" parameterType="String" resultType="House">
+    SELECT h.id,h.TYPE_ID typeId,h.TITLE,h.DESCRIPTION,h.PRICE,h.PUBDATE,h.FLOORAGE,
+            h.CONTACT,h.STREET_ID streetId,h.path,s.DISTRICT_ID districtId
+    FROM house h LEFT JOIN street s ON h.STREET_ID=s.ID WHERE h.id =#{id}
+  </select>
+
+  <select id="selectHouseDetail" parameterType="String" resultType="House">
+    SELECT h.*,t.name tname,s.NAME sname,d.name dname FROM house h
+LEFT JOIN TYPE t ON h.TYPE_ID=t.id
+LEFT JOIN street s ON h.STREET_ID=s.ID
+LEFT JOIN district d ON s.DISTRICT_ID=d.id
+where h.id=#{id}
+  </select>
+
+  <select id="selectAllHouse" resultType="House">
+    SELECT price,ispass,house.id,type_id,title,pubdate,floorage,contact,street_id,path,
+        street.name sname,type.NAME tname,district.NAME dname
+    FROM house
+    LEFT JOIN TYPE ON house.TYPE_ID=type.ID
+    LEFT JOIN street ON house.STREET_ID=street.ID
+    LEFT JOIN district ON street.DISTRICT_ID=district.ID
+    WHERE isdel=0
+  </select>
+
+  <select id="selectCheckHouse" parameterType="Integer" resultType="House">
+    SELECT price,ispass,house.id,type_id,title,pubdate,floorage,contact,street_id,path,
+        street.name sname,type.NAME tname,district.NAME dname
+    FROM house
+    LEFT JOIN TYPE ON house.TYPE_ID=type.ID
+    LEFT JOIN street ON house.STREET_ID=street.ID
+    LEFT JOIN district ON street.DISTRICT_ID=district.ID
+    WHERE ispass=#{passState}
+  </select>
+
+  <select id="getBroswerHouse" parameterType="cn.kgc.utils.Condition" resultType="House">
+    SELECT house.id,
+    type_id,
+    title,
+    pubdate,
+    floorage,
+    contact,
+    street_id,
+    path,
+    street.name sname,
+    type.NAME tname,
+    district.NAME dname,
+    price
+    FROM house
+    LEFT JOIN TYPE ON house.TYPE_ID=type.ID
+    LEFT JOIN street ON house.STREET_ID=street.ID
+    LEFT JOIN district ON street.DISTRICT_ID=district.ID
+    WHERE isdel=0 AND ispass=1
+    <if test="title!=null">
+      AND title LIKE CONCAT('%',#{title},'%')
+    </if>
+    <if test="did!=null">
+      AND district_id = #{did}
+    </if>
+    <if test="sid!=null">
+      AND street_id = #{sid}
+    </if>
+    <if test="tid!=null">
+      AND type_id = #{tid}
+    </if>
+    <if test="startPrice!=null">
+      AND price > #{startPrice}
+    </if>
+    <if test="endPrice!=null">
+      AND price &lt; #{endPrice}
+    </if>
+  </select>
+</mapper>
