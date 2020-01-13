@@ -4,6 +4,7 @@ import cn.kgc.domain.Users;
 import cn.kgc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -44,6 +45,27 @@ public class UserController {
             session.setMaxInactiveInterval(10*60);
             return "redirect:getHouseData";
 
+        }
+    }
+
+    @RequestMapping("selectUsers")
+    @ResponseBody
+    public String selectUsers(Integer uid,String password){
+        Users users = userService.selectUser(uid,password);
+        if (users==null){
+            return "{\"result\":-1}";
+        }else {
+            return "{\"result\":1}";
+        }
+    }
+
+    @RequestMapping("updateUsers")
+    public String updateUsers(String password,Integer id){
+        Boolean b = userService.updateUser(password,id);
+        if (b){
+            return "redirect:login.jsp";
+        }else{
+            return "redirect:selectUser.jsp";
         }
     }
 
